@@ -85,9 +85,9 @@
 </style>
 
 <script lang="ts">
-import type SelecionarIngredientes from './SelecionarIngredientes.vue';
+import SelecionarIngredientes from './SelecionarIngredientes.vue';
 
 export default {
-    data() { return { ingredientes: ['Alho', 'Manteiga', 'Orégano'] } }
+    data() { return { ingredientes: ['Alho', 'Manteiga', 'Orégano'] } }, components: { SelecionarIngredientes }
 }
 </script>
