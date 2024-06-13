@@ -3,7 +3,9 @@
         <h1 class="cabecalho titulo-ingredientes">Ingredientes</h1>
         <p class="paragrafo-lg instrucoes">Selecione abaixo os ingredientes que você quer usar nesta receita:</p>
         <ul class="categorias">
-            <li v-for="categoria in categorias">{{ categoria.nome }}</li>
+            <li v-for="categoria in categorias">
+                <CardCategoria :categoria="categoria" />
+            </li>
         </ul>
         <p class="paragrafo dica">*Atenção: consideramos que você tem em casa sal, pimenta e água.</p>
     </section>
@@ -48,27 +50,18 @@
 
 <script lang="ts">
 import { obterCategorias } from '@/http'
-
-interface ingredientesInterface {
-    ingredientes: string
-}
-
-interface categoriasInterface {
-
-    nome: string,
-    ingredientes: string[],
-    rotulo: string,
-
-}
+import type ICategoria from '@/interfaces/ICategoria';
+import CardCategoria from './CardCategoria.vue';
 
 export default {
     data() {
         return {
-            categorias: [] as categoriasInterface[]
+            categorias: [] as ICategoria[]
         }
     },
     async created() {
         this.categorias = await obterCategorias();
     },
+    components: { CardCategoria }
 }
 </script>
