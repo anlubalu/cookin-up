@@ -16,6 +16,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
 }
 
 .titulo-ingredientes {
@@ -32,7 +33,7 @@
     margin-bottom: 1rem;
     display: flex;
     justify-content: center;
-    gap: 1.5rem;
+    gap: 20px;
     flex-wrap: wrap;
 }
 
