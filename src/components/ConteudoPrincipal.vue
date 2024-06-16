@@ -3,18 +3,9 @@
         <section>
             <span class="subtitulo-lg sua-lista-texto">Sua lista:</span>
 
-            <ul v-if="ingredientes.length" class="ingredientes-sua-lista">
-                <li v-for="ingrediente in ingredientes" :key="ingrediente">
-                    <Tag :texto="ingrediente" />
-                </li>
-            </ul>
+            <SuaLista :ingredientes="ingredientes" />
 
-            <p v-else class="paragrafo lista-vazia">
-                <img src="../assets/imagens/icones/lista-vazia.svg" alt="Icone de pesquisa">
-                Sua lista está vazia, selecione ingredientes para iniciar.
-            </p>
-
-            <SelecionarIngredientes />
+            <SelecionarIngredientes @adicionar-ingrediente="ingredientes.push($event)" />
 
         </section>
     </main>
@@ -77,9 +68,15 @@
 
 <script lang="ts">
 import SelecionarIngredientes from './SelecionarIngredientes.vue';
+import SuaLista from './SuaLista.vue';
 import Tag from './Tag.vue';
 
 export default {
-    data() { return { ingredientes: ['Alho', 'Manteiga', 'Orégano'] } }, components: { SelecionarIngredientes, Tag }
+    data() {
+        return {
+            ingredientes: ['Alho', 'Manteiga', 'Orégano']
+        }
+    },
+    components: { SelecionarIngredientes, Tag, SuaLista }
 }
 </script>

@@ -4,7 +4,7 @@
         <p class="paragrafo-lg instrucoes">Selecione abaixo os ingredientes que você quer usar nesta receita:</p>
         <ul class="categorias">
             <li v-for="categoria in categorias">
-                <CardCategoria :categoria="categoria" />
+                <CardCategoria :categoria="categoria" @adicionar-ingrediente="$emit('adicionarIngrediente', $event)" />
             </li>
         </ul>
         <p class="paragrafo dica">*Atenção: consideramos que você tem em casa sal, pimenta e água.</p>
@@ -63,6 +63,7 @@ export default {
     async created() {
         this.categorias = await obterCategorias();
     },
-    components: { CardCategoria }
+    components: { CardCategoria },
+    emits: ['adicionarIngrediente']
 }
 </script>
