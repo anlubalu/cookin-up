@@ -1,11 +1,22 @@
 <template>
     <main class="conteudo-principal">
         <section>
-            <span class="subtitulo-lg sua-lista-texto">Sua lista:</span>
 
             <SuaLista :ingredientes="ingredientes" />
 
-            <SelecionarIngredientes @adicionar-ingrediente="ingredientes.push($event)" />
+            <!-- <SelecionarIngredientes @adicionar-ingrediente="ingredientes.push($event)" /> -->
+            <!-- <SelecionarIngredientes @adicionar-ingrediente="adicionarIngrediente"
+                @remover-ingrediente="$emit('removerIngrediente', $event)" /> -->
+            <!-- @buscar-receitas="conteudo = 'MostrarReceitas'" -->
+
+            <KeepAlive include="SelecionarIngredientes">
+                <SelecionarIngredientes v-if="conteudo === 'SelecionarIngredientes'"
+                    @adicionar-ingrediente="adicionarIngrediente" @remover-ingrediente="removerIngrediente"
+                    @buscar-receitas="navegar('MostrarReceitas')" />
+
+                <MostrarReceitas v-else-if="conteudo === 'MostrarReceitas'"
+                    @editar-receitas="navegar('SelecionarIngredientes')" />
+            </KeepAlive>
 
         </section>
     </main>
@@ -67,16 +78,46 @@
 </style>
 
 <script lang="ts">
+import MostrarReceitas from './MostrarReceitas.vue';
 import SelecionarIngredientes from './SelecionarIngredientes.vue';
 import SuaLista from './SuaLista.vue';
 import Tag from './Tag.vue';
 
+type Pagina = 'SelecionarIngredientes' | 'MostrarReceitas'
+
 export default {
     data() {
         return {
-            ingredientes: ['Alho', 'Manteiga', 'Orégano']
+            ingredientes: [] as string[],
+            conteudo: 'SelecionarIngredientes' as Pagina
         }
     },
-    components: { SelecionarIngredientes, Tag, SuaLista }
+    components: { SelecionarIngredientes, Tag, SuaLista, MostrarReceitas },
+    methods: {
+        adicionarIngrediente(ingrediente: string) {
+            this.ingredientes.push(ingrediente)
+        },
+        removerIngrediente(ingrediente: string) {
+            this.ingredientes = this.ingredientes.filter(iLista => ingrediente !== iLista);
+        },
+        navegar(pagina: Pagina) {
+            this.conteudo = pagina
+        }
+    }
 }
 </script>
+
+<!-- <script setup lang="ts">
+import { ref } from 'vue';
+import SelecionarIngredientes from './SelecionarIngredientes.vue';
+import SuaLista from './SuaLista.vue';
+
+const ingredientes = ref<string[]>([]);
+
+function adicionarIngrediente(ingrediente: string) {
+    ingredientes.value.push(ingrediente)
+}
+function removerIngrediente(ingrediente: string) {
+    ingredientes.value = ingredientes.value.filter(iLista => ingrediente !== iLista);
+}
+</script> -->
