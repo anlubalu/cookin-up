@@ -4,7 +4,7 @@ import type IReceita from '@/interfaces/IReceita';
 import BotaoPrincipal from './BotaoPrincipal.vue';
 import CardReceita from './CardReceita.vue';
 import type { PropType } from 'vue';
-// import { itensDeLista1EstaoEmLista2 } from '@/operacoes/listas';
+import { itensDeLista1EstaoEmLista2 } from '@/operacoes/listas';
 
 export default {
     props: { ingredientes: { type: Array as PropType<string[]>, required: true } },
@@ -14,39 +14,14 @@ export default {
         };
     },
     async created() {
-        // console.log(this.ingredientes);
-        console.debug(this.ingredientes)
-
 
         const receitas = await obterReceitas();
-        console.log(receitas);
-
 
         this.receitasEncontradas = receitas.filter((receita) => {
 
+            const possoFazerReceita = itensDeLista1EstaoEmLista2(receita.ingredientes, this.ingredientes)
 
-            // console.log(itemLista1);
-
-
-
-
-
-            // receita.ingredientes.includes(this.ingredientes) 
-
-            // receita.ingredientes.filter((ingrediente)=>ingrediente.includes(this.ingredientes)) 
-
-            for (const searchIng of receita.ingredientes) {
-                if (this.ingredientes.includes(searchIng)) {
-                    return true
-                }
-
-            }
-
-
-            // const possoFazerReceita = itensDeLista1EstaoEmLista2(receita.ingredientes, this.ingredientes)
-            // console.log(possoFazerReceita);
-
-            // return possoFazerReceita
+            return possoFazerReceita
         })
 
 
