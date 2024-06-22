@@ -14,7 +14,7 @@
                     @adicionar-ingrediente="adicionarIngrediente" @remover-ingrediente="removerIngrediente"
                     @buscar-receitas="navegar('MostrarReceitas')" />
 
-                <MostrarReceitas v-else-if="conteudo === 'MostrarReceitas'"
+                <MostrarReceitas v-else-if="conteudo === 'MostrarReceitas'" :ingredientes="ingredientes"
                     @editar-receitas="navegar('SelecionarIngredientes')" />
             </KeepAlive>
 
@@ -96,6 +96,8 @@ export default {
     methods: {
         adicionarIngrediente(ingrediente: string) {
             this.ingredientes.push(ingrediente)
+            console.log(this.ingredientes);
+
         },
         removerIngrediente(ingrediente: string) {
             this.ingredientes = this.ingredientes.filter(iLista => ingrediente !== iLista);
